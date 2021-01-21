@@ -2,12 +2,26 @@ import os
 
 
 class BatchScripter:
+    """
+    Class with functions to make a .bat script for ffmpeg
+
+    Parameters
+    ----------
+    targetFolderPath : str
+        absolute system path to the folder containing target audio file(s)
+
+
+    """
+
     def __init__(self, targetFolderPath):
         self.ffmpegPath = "C:\\ffmpeg\\bin"
         self.targetFileExtension = ".flac"
         self.targetFolderPath = targetFolderPath
 
     def mkScript(self):
+        """ouput .bat file for ffmpeg in path specified by self.ffmpegPath
+
+        """
 
         filePaths = getFilePaths(self.targetFolderPath)
 

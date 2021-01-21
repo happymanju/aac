@@ -1,38 +1,42 @@
 import os
 
 
-def mkScript(folderPath, targetFileExtension=".flac"):
+class BatchScripter:
+    def __init__(self):
+        self.ffmpegPath = "C:\\ffmpeg\\bin"
+        self.targetFileExtension = ".flac"
 
-    filePaths = getFilePaths(folderPath)
+    def mkScript(self, folderPath):
 
-    os.chdir("C:\\ffmpeg\\bin")
-    staged_script = open("aac_encode.bat", "w")
-    for file in filePaths:
-        staged_script.write(writeLine(file, targetFileExtension))
+        filePaths = getFilePaths(folderPath)
 
-    staged_script.close()
+        os.chdir("C:\\ffmpeg\\bin")
+        staged_script = open("aac_encode.bat", "w")
+        for file in filePaths:
+            staged_script.write(writeLine(file))
 
-    return
+        staged_script.close()
 
+        return
 
-def getFilePaths(path):
-    os.chdir(path)
+    def getFilePaths(self, path):
+        os.chdir(path)
 
-    filePaths = []
-    fileNames = os.listdir()
-    for file in fileNames:
-        filePaths.append(os.path.abspath(file))
+        filePaths = []
+        fileNames = os.listdir()
+        for file in fileNames:
+            if self.targetFileExtension in file:
+                filePaths.append(os.path.abspath(file))
 
-    if 'aac' not in os.listdir():
-        os.mkdir(".\\aac")
+        if 'aac' not in os.listdir():
+            os.mkdir(".\\aac")
 
-    return filePaths
+        return filePaths
 
+    def writeLine(self, file):
+        outputFilePath = file.replace(self.targetFileExtension, ".m4a")
 
-def writeLine(file, targetFileExtension=".flac"):
-    outputFilePath = file.replace(targetFileExtension, ".m4a")
+        line = 'ffmpeg -i "{i}" -c:a aac -b:a 256k "{o}"\n'.format(
+            i=file, o=outputFilePath)
 
-    line = 'ffmpeg -i "{i}" -c:a aac -b:a 256k "{o}"\n'.format(
-        i=file, o=outputFilePath)
-
-    return line
+        return line

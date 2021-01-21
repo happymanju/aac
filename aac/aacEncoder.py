@@ -10,6 +10,15 @@ class BatchScripter:
     targetFolderPath : str
         absolute system path to the folder containing target audio file(s)
 
+    Class properties
+    ---------------------
+    self.ffmpegPath : str (default: "C:\\ffmpeg\\bin")
+        absolute path to the bin folder of your ffmpeg installation
+
+    self.targetFileExtension : str (default: ".flac")
+        file extension of audio files to be converted to AAC; format string as ".ext"
+
+
 
     """
 

@@ -2,15 +2,16 @@ import os
 
 
 class BatchScripter:
-    def __init__(self):
+    def __init__(self, targetFolderPath):
         self.ffmpegPath = "C:\\ffmpeg\\bin"
         self.targetFileExtension = ".flac"
+        self.targetFolderPath = targetFolderPath
 
-    def mkScript(self, folderPath):
+    def mkScript(self):
 
-        filePaths = getFilePaths(folderPath)
+        filePaths = getFilePaths(self.targetFolderPath)
 
-        os.chdir("C:\\ffmpeg\\bin")
+        os.chdir(self.ffmpegPath)
         staged_script = open("aac_encode.bat", "w")
         for file in filePaths:
             staged_script.write(writeLine(file))
